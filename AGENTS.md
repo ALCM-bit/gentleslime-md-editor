@@ -58,16 +58,14 @@ Onde colocar código novo:
 
 ## Comandos
 
-> Fase 0 concluída: `dev`, `tauri`, `test`, `lint` e `typecheck` existem. Ajuste esta seção quando `e2e` e `bench` forem criados.
-
 ```bash
 pnpm install              # dependências
 pnpm dev                  # app desktop em modo dev (tauri dev)
 pnpm test                 # Vitest em todos os pacotes
 pnpm lint                 # ESLint + Prettier + cargo clippy + cargo fmt --check
 pnpm typecheck            # tsc --noEmit nos pacotes; ngc no app (checa templates)
-pnpm e2e                  # WebdriverIO + tauri-driver (Windows e Linux) — ainda não existe
-pnpm bench                # benchmarks de performance — ainda não existe
+pnpm e2e                  # WebdriverIO + tauri-driver (Windows e Linux)
+pnpm bench                # benchmarks de performance
 pnpm tauri android dev    # Android
 pnpm tauri ios dev        # iOS (macOS + Xcode)
 ```
@@ -161,8 +159,17 @@ Se uma mudança pode afetar essas metas, rode `pnpm bench` e informe os números
 ## Git e contribuição
 
 - Código, identificadores, commits e comentários em **inglês** (projeto open source). Documentação de usuário em pt-BR e en.
-- Commits no padrão **Conventional Commits** (`feat:`, `fix:`, `perf:`, `refactor:`, `test:`, `docs:`, `chore:`).
+- Commits no padrão **Conventional Commits** (`feat:`, `fix:`, `perf:`, `refactor:`, `test:`, `docs:`, `chore:`, `ci:`, `build:`). Escopo opcional com o nome do pacote: `feat(editor): ...`, `fix(core): ...`. Mudança incompatível leva `!` (`feat(core)!: ...`) e um rodapé `BREAKING CHANGE:`.
 - PRs pequenos e focados. Não misture refatoração com funcionalidade.
+
+### Fluxo de branches (feature branch)
+
+- `main` está sempre estável: lint, typecheck e testes passando. **Nunca faça commit direto em `main`: toda mudança entra por PR.**
+- Todo trabalho começa numa branch criada a partir da `main` atualizada, com o nome `<tipo>/<descricao-curta>` em inglês e kebab-case, usando os mesmos tipos dos commits: `feat/live-emphasis`, `fix/atomic-write-rename`, `docs/git-workflow`.
+- Uma branch = um assunto = um PR. Mantenha a branch curta e atualizada com `git rebase main`; não faça merge da `main` para dentro dela.
+- Antes de abrir o PR: `pnpm lint`, `pnpm typecheck` e `pnpm test` passando.
+- O PR entra na `main` por **squash merge**. O título do PR é a mensagem do commit final e segue Conventional Commits.
+- Apague a branch depois do merge.
 - Não adicione dependências novas sem justificar no PR (tamanho, manutenção, licença compatível com MIT).
 
 ## Fora de escopo — não implemente sem pedido explícito
