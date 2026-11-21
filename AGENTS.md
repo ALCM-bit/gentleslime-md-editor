@@ -74,6 +74,8 @@ pnpm tauri ios dev        # iOS (macOS + Xcode)
 
 Antes de dizer que uma tarefa terminou, rode `pnpm lint`, `pnpm typecheck` e `pnpm test` e confira que passaram.
 
+O CI (`.github/workflows/ci.yml`) roda lint, typecheck, testes e build em todo PR e em todo push na `main`. Um PR só entra com o CI verde. As actions do workflow são fixadas pelo SHA do commit, com a versão num comentário, e atualizadas como qualquer outra dependência.
+
 ## Contrato do adaptador
 
 ```ts
