@@ -1,0 +1,16 @@
+{
+  "name": "@gentleslime/adapters",
+  "version": "0.0.0",
+  "private": true,
+  "description": "PlatformAdapter implementations (Tauri and in-memory for tests).",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  }
+}

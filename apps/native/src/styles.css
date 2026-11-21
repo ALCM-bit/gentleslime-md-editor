@@ -1,0 +1,20 @@
+/* Phase 0 placeholder tokens. The full token set and themes live in packages/ui. */
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --text: #1f2328;
+  font-family: system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1d22;
+    --text: #e6e7ea;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}

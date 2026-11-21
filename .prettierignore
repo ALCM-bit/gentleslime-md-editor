@@ -1,0 +1,11 @@
+pnpm-lock.yaml
+dist/
+coverage/
+.angular/
+.turbo/
+target/
+gen/
+apps/native/src-tauri/icons/
+
+# Markdown is never reformatted: docs are exported from elsewhere and test fixtures must stay byte-exact.
+*.md

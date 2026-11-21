@@ -1,0 +1,17 @@
+node_modules/
+dist/
+out-tsc/
+coverage/
+.angular/
+.turbo/
+target/
+gen/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.claude/settings.local.json
