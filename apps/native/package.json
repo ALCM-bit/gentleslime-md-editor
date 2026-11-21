@@ -26,6 +26,8 @@
     "@angular/cli": "^22.0.1",
     "@angular/compiler-cli": "^22.0.1",
     "@tauri-apps/cli": "^2",
-    "jsdom": "^31.0.1"
+    "jsdom": "^31.0.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
