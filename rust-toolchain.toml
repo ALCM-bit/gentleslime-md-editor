@@ -1,0 +1,5 @@
+# Pinned Rust toolchain; update it on purpose, in its own PR.
+[toolchain]
+channel = "1.100.0"
+components = ["clippy", "rustfmt"]
+profile = "minimal"
