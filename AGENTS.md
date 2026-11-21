@@ -30,6 +30,8 @@ Editor de Markdown **local-first**, **open source (MIT)**, com **edição ao viv
 | Monorepo | pnpm workspaces + Turborepo |
 | Testes | Vitest, Angular Testing Library, WebdriverIO + tauri-driver (E2E), criterion (Rust) |
 
+**Versões fixas.** Toda dependência e ferramenta tem versão exata, sem `^` ou `~`: pacotes npm (`savePrefix: ''` no `pnpm-workspace.yaml`; versões compartilhadas no `catalog`), crates (`=x.y.z` no `Cargo.toml`), Node (`devEngines.runtime` e `.nvmrc`), pnpm (`packageManager`) e Rust (`rust-toolchain.toml`). Os lockfiles são versionados. Atualizar versão é decisão do time: nunca rode `pnpm update`, `cargo update` nem troque uma versão de passagem; atualização vai num PR próprio (`build(deps): ...`). Mantenha `tauri` (Rust) e `@tauri-apps/*` (npm) na mesma versão minor.
+
 ## Estrutura do repositório
 
 ```text

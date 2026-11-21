@@ -2,10 +2,13 @@ packages:
   - apps/*
   - packages/*
 
+# Dependencies are pinned to exact versions and only updated on purpose, in their own PR.
+savePrefix: ''
+
 # Shared versions for dependencies used by more than one package.
 catalog:
-  typescript: ~6.0.3
-  vitest: ^5.1.1
+  typescript: 6.0.3
+  vitest: 5.1.1
 
 # Install scripts are blocked by default; only these Angular build-chain deps may run them.
 allowBuilds:
