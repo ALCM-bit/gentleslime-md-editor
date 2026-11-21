@@ -12,5 +12,9 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

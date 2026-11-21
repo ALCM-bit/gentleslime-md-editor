@@ -108,7 +108,8 @@ Use `memory-adapter` em testes unitários; nunca toque no disco real fora dos te
 
 - Somente **standalone components**. Nada de `NgModule`.
 - App **zoneless** (`provideZonelessChangeDetection()`). Estado com **signals** e `computed()`; nada de zone.js.
-- `ChangeDetectionStrategy.OnPush` em todos os componentes.
+- Todos os componentes em **OnPush**, que é o padrão do Angular: não declare `changeDetection` e nunca use `Eager` (o lint bloqueia).
+- Arquivos e classes seguem o guia de estilo atual do Angular: `editor-toolbar.ts`, `editor-toolbar.html` e classe `EditorToolbar`, sem sufixos `.component`/`Component`.
 - Novo control flow (`@if`, `@for` com `track`, `@switch`) e `@defer` para o que é pesado ou pouco usado.
 - Use `inject()` em vez de injeção pelo construtor.
 - O CodeMirror é criado **uma vez**, em `afterNextRender()`. O texto do documento **nunca** vira signal a cada tecla; só metadados (linha, coluna, contagem de palavras), com debounce.
