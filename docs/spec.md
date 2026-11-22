@@ -54,7 +54,7 @@ O MVP entrega abrir, ler, editar e salvar `.md` em desktop; mobile entra na v1; 
 
 O conteúdo fica num único painel de edição ao vivo, como no Obsidian: não existe tela separada de pré-visualização. No desktop a lista de arquivos fica à esquerda; no celular ela vira uma gaveta.
 
-&#91;embedded content: wireframe · desktop e celular\]
+![Wireframe desktop e celular](images/wireframe.png)
 
 No celular, a barra sobre o teclado é rolável e traz desfazer, refazer, negrito, itálico, título, checkbox, recuo, link e `[[`. Não há barra flutuante de seleção, para não cobrir o menu nativo de copiar e colar. A troca de modo fica no menu ⋯, e a gaveta de arquivos abre por botão, além do gesto.
 
@@ -62,7 +62,7 @@ No celular, a barra sobre o teclado é rolável e traz desfazer, refazer, negrit
 
 O mascote é o **Gentle Slime**, criado para o projeto a partir da ideia de um slime cavalheiro: corpo azul arredondado, cartola com um # de Markdown, monóculo, bigode fino e gravata-borboleta dourada. O rascunho abaixo define forma e cores; a arte final segue este desenho, não a imagem de referência.
 
-&#91;embedded content: mascote · rascunho para o ilustrador\]
+![Mascote Gentle Slime](images/mascote.png)
 
 A marca tem dois azuis: o claro do corpo do mascote (`--accent-soft`) e o escuro usado em links e foco (`--accent`), que garante contraste. O dourado só aparece na marca (ícone, splash, site), nunca em controles.
 
@@ -181,7 +181,7 @@ Os atalhos seguem os do Obsidian, para quem já vem de lá.
 
 Recomendação: **Tauri 2 + Angular + TypeScript + CodeMirror 6**. Um único app web roda dentro do WebView nativo de cada sistema; só a camada de arquivos muda entre plataformas.
 
-&#91;embedded content: arquitetura · 4 camadas\]
+![Arquitetura em 4 camadas](images/arquitetura.png)
 
 A UI e o núcleo nunca chamam APIs de arquivo diretamente: tudo passa pelo `PlatformAdapter`, que tem uma implementação Tauri (desktop e mobile) e uma em memória para testes. Isso permite testar o núcleo sem plataforma e, se um dia a versão web fizer sentido, basta criar um adaptador web sem mexer no resto.
 
@@ -299,7 +299,7 @@ Cada requisito tem uma meta mensurável, verificada em CI ou no teste de release
 
 Comece pelo núcleo e pelo desktop; o mobile reaproveita o mesmo código quando o MVP estiver estável.
 
-&#91;embedded content: roadmap · 4 fases e seus portões (estimativa para 1–2 devs)\]
+![Roadmap em 4 fases](images/roadmap.png)
 
 Cada fase só termina quando o critério sob o losango passa. Prazos são estimativas para 1–2 pessoas em tempo integral.
 
