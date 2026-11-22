@@ -6,5 +6,6 @@ Desktop (Windows, macOS, Linux) e mobile (Android, iOS), feito com Tauri 2, Angu
 - Spec do produto: `docs/spec.md`
 - Regras para agentes de código: `AGENTS.md`
 - Como preparar a máquina: `SETUP.md`
+- Como contribuir: `CONTRIBUTING.md`
 
 > Projeto em fase inicial.
