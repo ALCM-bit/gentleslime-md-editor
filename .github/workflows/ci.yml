@@ -84,11 +84,11 @@ jobs:
 
   desktop:
     name: Desktop build (${{ matrix.os }})
-    # Phase 0 exit criterion: the app builds on all three desktop systems.
+    # Linux only for now; windows-2025 and macos-15 join the matrix when we port to them.
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2025, macos-15]
+        os: [ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     defaults:
