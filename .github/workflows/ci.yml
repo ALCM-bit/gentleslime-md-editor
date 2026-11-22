@@ -81,3 +81,93 @@ jobs:
 
       - name: Build frontend
         run: pnpm build
+
+  desktop:
+    name: Desktop build (${{ matrix.os }})
+    # Linux only for now; windows-2025 and macos-15 join the matrix when we port to them.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    defaults:
+      run:
+        # Git Bash on Windows, so every step runs the same script on all systems.
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Tauri system dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libwebkit2gtk-4.1-dev build-essential curl wget file \
+            libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: Set up Node (version from .nvmrc)
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+
+      - name: Enable pnpm (version from packageManager)
+        run: corepack enable
+
+      - name: Locate pnpm store
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Install Rust toolchain (from rust-toolchain.toml)
+        run: rustup toolchain install
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: apps/native/src-tauri -> target
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build installers
+        run: pnpm tauri build
+
+      - name: Check installer size (< 15 MB)
+        # The AppImage is exempt: it bundles WebKitGTK and its dependencies (~100 MB),
+        # while the other formats use the WebView already on the system.
+        run: |
+          limit=$((15 * 1024 * 1024))
+          bundle=apps/native/src-tauri/target/release/bundle
+          found=0
+          status=0
+          echo "| Installer | Size |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          while IFS= read -r -d '' file; do
+            found=1
+            size=$(wc -c < "$file")
+            mib=$(awk -v s="$size" 'BEGIN { printf "%.2f MiB", s / 1048576 }')
+            echo "| $(basename "$file") | $mib |" >> "$GITHUB_STEP_SUMMARY"
+            if [ "$size" -ge "$limit" ]; then
+              echo "::error file=$file::Installer is $mib, over the 15 MB budget"
+              status=1
+            else
+              echo "$(basename "$file"): $mib"
+            fi
+          done < <(find "$bundle" -type f \( -name '*.msi' -o -name '*-setup.exe' \
+            -o -name '*.dmg' -o -name '*.deb' -o -name '*.rpm' \) -print0)
+          if [ "$found" -eq 0 ]; then
+            echo "::error::No installer found under $bundle"
+            exit 1
+          fi
+          exit "$status"
